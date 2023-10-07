@@ -19,7 +19,7 @@
 class Piece {
 protected:
    Position position;  // The position of the piece on the board
-   bool isWhite;  // Whether the piece is white or not
+   bool fWhite;  // Whether the piece is white or not
    int nMoves;  // Number of moves made by this piece
    int lastMove;  // The last move number on which this piece was moved
 
@@ -29,7 +29,7 @@ public:
 
    // Public Methods
    void assign(Position position);  // Assign a new position to the piece
-   void assign(Piece piece);  // Assign properties from another piece
+   void assign(Piece& piece);  // Assign properties from another piece
    bool isWhite() const;  // Check if the piece is white
    bool isMove() const;  // Check if the piece has moved
    int getNMoves() const;  // Get the number of moves made by this piece
@@ -41,4 +41,5 @@ public:
    virtual void display(ogstream& gout) = 0;  // Display the piece
    virtual std::vector<Position> getMoves(const Board& board) = 0;  // Get possible moves
    virtual std::vector<Move> getMovesSlide(const Board& board, const std::vector<Position>& delta);
+   virtual PieceType getPieceType() const = 0;
 };

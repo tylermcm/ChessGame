@@ -11,11 +11,10 @@ std::vector<Position> Queen::getMoves(const Board& board) {
        {-1,  0},          {1,  0},
        {-1, -1}, {0, -1}, {1, -1}
    };
-   // TODO: Add logic to filter out invalid moves
    for (int i = 0; i < 8; ++i) {
       int r = row;
       int c = col;
-      while (/* condition to check if (r, c) is a valid board position */) {
+      while (r >= 0 && r < 8 && c >= 0 && c < 8) { //update this line with full logic (board[r * 8 + c == '')
          r += moves[i][0];
          c += moves[i][1];
          possible.push_back(Position(r, c));

@@ -14,7 +14,7 @@ std::vector<Position> Bishop::getMoves(const Board& board) {
    for (int i = 0; i < 4; ++i) {
       int r = row;
       int c = col;
-      while (/* condition to check if (r, c) is a valid board position */) {
+      while (r >= 0 && r < 8 && c >= 0 && c < 8) { //update this line with full logic (board[r * 8 + c == '')
          r += moves[i][0];
          c += moves[i][1];
          possible.push_back(Position(r, c));

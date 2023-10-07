@@ -1,5 +1,6 @@
 #pragma once
-#include "Piece.h"
+#include "piece.h"
+#include <vector>
 
 class Queen : public Piece {
 public:
@@ -14,4 +15,6 @@ public:
    }
 
    std::vector<Position> getMoves(const Board& board) override;
+   PieceType getPieceType() const override { return QUEEN; }
+
 };

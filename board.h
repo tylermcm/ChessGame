@@ -18,6 +18,9 @@
 #include "move.h"
 #include "position.h" // for Position class
 #include "Piece.h"    // for Piece class
+#include "uiDraw.h"
+
+class Piece;
 
 class Board
 {
@@ -29,11 +32,9 @@ private:
 	void assertBoard();
 public:
 	Board(ogstream& gout, bool reset);
-
-	int getCurrentMove() const;
-	bool whiteTurn() const;
+	int getCurrentMove() const { return currentMove;  }
+	bool whiteTurn() const { return currentMove % 2 == 0; }
 	void display(Position posHover, Position posSel);
-	Piece* get(Position pos) const;
 	void free();
 	void reset();
 	void move(Move move);

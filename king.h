@@ -1,11 +1,12 @@
 #pragma once
-#include "Piece.h"
+#include "piece.h"
+#include <vector>
 
 class King : public Piece {
 public:
    King(int r, int c, bool white) : Piece(r, c, white) {}
 
-   char getLetter() const override {
+   char getLetter() const {
       return isWhite() ? 'K' : 'k';
    }
 
@@ -14,5 +15,6 @@ public:
    }
 
    std::vector<Position> getMoves(const Board& board) override;
+   PieceType getPieceType() const override { return KING; }
 };
 

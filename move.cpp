@@ -32,8 +32,9 @@ Move::Move() :
  **********************************************/
 void Move::complete(const Board& board)
 {
-   //set the capture
-   capture = board.getBoardElement(dest);
+   // set the capture
+   capture = board[dest].getLetter();
+
    // set the color
    isWhite = board[source].isWhite();
 

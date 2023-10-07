@@ -1,6 +1,6 @@
 #pragma once
-
 #include "piece.h"
+#include <vector>
 
 class Pawn : public Piece {
 public:
@@ -11,8 +11,8 @@ public:
    }
 
    void display(ogstream& gout) override {
-      // Implement pawn-specific display logic
    }
 
-   std::vector<Position> getMoves(const Board& board) override;  // Just the declaration
+   std::vector<Position> getMoves(const Board& board) override;  
+   PieceType getPieceType() const override { return PAWN; }
 };

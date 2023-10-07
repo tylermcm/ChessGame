@@ -12,15 +12,16 @@
 #include "Piece.h"
 #include "board.h"
 
- // Constructor
-Piece::Piece(int r, int c, bool white) : position(r, c), isWhite(white), nMoves(0), lastMove(-1) {}
+
+Piece::Piece(int r, int c, bool white) : position(r, c), fWhite(white), nMoves(0), lastMove(-1) {}
 
 std::vector<Move> Piece::getMovesSlide(const Board& board, const std::vector<Position>& delta) {
    std::vector<Move> moves;
    for (const auto& d : delta) {
       Position posMove = position + d;
       Move move;
-      while (posMove.isValid() && board.get(posMove).getLetter() == ' ') { // Assuming SPACE is represented by ' '
+      while (posMove.isValid() && board.get(posMove).getLetter() == ' ') 
+      { 
          move.setSrc(getPosition());
          move.setDes(posMove);
          move.setWhiteMove(isWhite());
@@ -45,16 +46,16 @@ void Piece::assign(Position newPosition) {
 }
 
 // Assign properties from another piece
-void Piece::assign(Piece piece) {
+void Piece::assign(Piece& piece) {
    position = piece.getPosition();
-   isWhite = piece.isWhite();
+   fWhite = piece.isWhite();
    nMoves = piece.getNMoves();
    lastMove = piece.justMoved() ? piece.getNMoves() : -1; 
 }
 
 // Check if the piece is white
 bool Piece::isWhite() const {
-   return isWhite;
+   return fWhite;
 }
 
 // Check if the piece has moved
