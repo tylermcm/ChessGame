@@ -14,23 +14,38 @@
 
 #include <set>
 #include <string>
+
+#include "move.h"
 #include "position.h" // for Position class
 #include "Piece.h"    // for Piece class
 
 class Board
 {
-public:
-   // Constructors, destructors, and assignment operator
-
-   // Public methods
-   inline bool isWhite(const char* board, int row, int col);
-   inline bool isNotWhite(const char* board, int row, int col);
-   inline bool isBlack(const char* board, int row, int col);
-   inline bool isNotBlack(const char* board, int row, int col);
-   char getLetter(int position); // Compatibility layer for Move class
-
 private:
-   // Private methods and attributes
-   Piece pieces[64];    // Array holding Piece objects
-   char boardState[64]; // Array holding the current state of the board
+	Piece* board[64];
+	int currentMove;
+	ogstream gout;
+	void swap(Position pos1, Position pos2);
+	void assertBoard();
+public:
+	Board(ogstream& gout, bool reset);
+
+	int getCurrentMove() const;
+	bool whiteTurn() const;
+	void display(Position posHover, Position posSel);
+	Piece* get(Position pos) const;
+	void free();
+	void reset();
+	void move(Move move);
+	void assign(Piece* piece);
+};
+
+/***********************************************
+ * Row Column
+ * Simple row/column pair
+ ************************************************/
+struct RC
+{
+	int row;
+	int col;
 };

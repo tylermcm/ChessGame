@@ -10,31 +10,69 @@
  ************************************************************************/
 
 #include "Piece.h"
-#include <cassert>
+#include "board.h"
 
- // Get possible moves for a given piece type at a given location
-std::set<int> Piece::getPossibleMoves(const char* board, int location, PieceType pieceType)
-{
-   std::set<int> possible;
-   // Implement logic based on the type of the piece
-   switch (pieceType)
-   {
-   case PAWN:
-      possible = getPawnMoves(board, location);
-      break;
-      // TODO: Handle other piece types here
-   default:
-      break;
+ // Constructor
+Piece::Piece(int r, int c, bool white) : position(r, c), isWhite(white), nMoves(0), lastMove(-1) {}
+
+std::vector<Move> Piece::getMovesSlide(const Board& board, const std::vector<Position>& delta) {
+   std::vector<Move> moves;
+   for (const auto& d : delta) {
+      Position posMove = position + d;
+      Move move;
+      while (posMove.isValid() && board.get(posMove).getLetter() == ' ') { // Assuming SPACE is represented by ' '
+         move.setSrc(getPosition());
+         move.setDes(posMove);
+         move.setWhiteMove(isWhite());
+         moves.push_back(move);
+         posMove += d;
+      }
+      if (posMove.isValid() && (board.get(posMove).isWhite() != isWhite() || board.get(posMove).getLetter() == ' ')) {
+         move.setSrc(getPosition());
+         move.setDes(posMove);
+         move.setWhiteMove(isWhite());
+         if (board.get(posMove).getLetter() != ' ') {
+            move.setCapture(board.get(posMove).getLetter());
+         }
+         moves.push_back(move);
+      }
    }
-   return possible;
+   return moves;
+}
+// Assign a new position to the piece
+void Piece::assign(Position newPosition) {
+   position = newPosition;
 }
 
-// Get possible moves for a Pawn at a given location
-std::set<int> Piece::getPawnMoves(const char* board, int location)
-{
-   std::set<int> possible;
-   // TODO: Implement pawn-specific logic based on the original chess.cpp file
-   return possible;
+// Assign properties from another piece
+void Piece::assign(Piece piece) {
+   position = piece.getPosition();
+   isWhite = piece.isWhite();
+   nMoves = piece.getNMoves();
+   lastMove = piece.justMoved() ? piece.getNMoves() : -1; 
 }
 
-// TODO: Add methods for other piece types
+// Check if the piece is white
+bool Piece::isWhite() const {
+   return isWhite;
+}
+
+// Check if the piece has moved
+bool Piece::isMove() const {
+   return nMoves > 0;
+}
+
+// Get the number of moves made by this piece
+int Piece::getNMoves() const {
+   return nMoves;
+}
+
+// Get the current position of the piece
+Position Piece::getPosition() const {
+   return position;
+}
+
+// Check if the piece just moved
+bool Piece::justMoved() const {
+   return lastMove == nMoves;
+}
