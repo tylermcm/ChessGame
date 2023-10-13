@@ -43,7 +43,7 @@ public:
 
 	void setLastMove(int currentMove) { lastMove = currentMove; }
 
-	virtual char getLetter() const = 0;
+	virtual PieceType getLetter() const = 0;
 	virtual void display(ogstream* pgout) const = 0;
 	virtual void getMoves(set <Move>& moves, const Board& board) const = 0;
 
@@ -70,7 +70,7 @@ class Space : public Piece
 {
 public:
 	Space(int r, int c) : Piece(r,c) {}
-	virtual char getLetter() const { return ' '; }
+	virtual PieceType getLetter() const { return SPACE; }
 	virtual void getMoves(set <Move>& moves, const Board& board) const {}
 	virtual void display(ogstream* pgout) const {}
 };
@@ -82,7 +82,7 @@ class Pawn : public Piece
 {
 public:
 	Pawn(int r, int c, bool isWhite) : Piece (r, c, isWhite) {}
-	char getLetter() const { return 'p'; }
+	PieceType getLetter() const { return PAWN; }
 	void getMoves(set <Move>& moves, const Board& board) const;
 	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
@@ -100,7 +100,7 @@ class Rook : public Piece
 {
 public:
 	Rook(int r, int c, bool isWhite) : Piece(r, c, isWhite) {}
-	char getLetter() const { return 'p'; }
+	PieceType getLetter() const { return ROOK; }
 	void getMoves(set <Move>& moves, const Board& board) const;
 	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
@@ -116,7 +116,7 @@ class Knight : public Piece
 {
 public:
 	Knight(int r, int c, bool isWhite) : Piece(r, c, isWhite) {}
-	char getLetter() const { return 'p'; }
+	PieceType getLetter() const { return KNIGHT; }
 	void getMoves(set <Move>& moves, const Board& board) const;
 	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
@@ -132,7 +132,7 @@ class Bishop : public Piece
 {
 public:
 	Bishop(int r, int c, bool isWhite) : Piece(r, c, isWhite) {}
-	char getLetter() const { return 'p'; }
+	PieceType getLetter() const { return BISHOP; }
 	void getMoves(set <Move>& moves, const Board& board) const;
 	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
@@ -148,7 +148,7 @@ class Queen : public Piece
 {
 public:
 	Queen(int r, int c, bool isWhite) : Piece(r, c, isWhite) {}
-	char getLetter() const { return 'p'; }
+	PieceType getLetter() const { return QUEEN; }
 	void getMoves(set <Move>& moves, const Board& board) const;
 	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
@@ -164,7 +164,7 @@ class King : public Piece
 {
 public:
 	King(int r, int c, bool isWhite) : Piece(r, c, isWhite) {}
-	char getLetter() const { return 'p'; }
+	PieceType getLetter() const { return KING; }
 	void getMoves(set <Move>& moves, const Board& board) const;
 	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
