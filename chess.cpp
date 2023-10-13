@@ -300,46 +300,46 @@ void draw(const char* board, const Interface& ui, const set <int>& possible)
       gout.drawPossible(*it);
 
    // draw the pieces
-   for (int i = 0; i < 64; i++)
-      switch (board[i])
-      {
-      case 'P':
-         gout.drawPawn(i, true);
-         break;
-      case 'p':
-         gout.drawPawn(i, false);
-         break;
-      case 'K':
-         gout.drawKing(i, true);
-         break;
-      case 'k':
-         gout.drawKing(i, false);
-         break;
-      case 'Q':
-         gout.drawQueen(i, true);
-         break;
-      case 'q':
-         gout.drawQueen(i, false);
-         break;
-      case 'R':
-         gout.drawRook(i, true);
-         break;
-      case 'r':
-         gout.drawRook(i, false);
-         break;
-      case 'B':
-         gout.drawBishop(i, true);
-         break;
-      case 'b':
-         gout.drawBishop(i, false);
-         break;
-      case 'N':
-         gout.drawKnight(i, true);
-         break;
-      case 'n':
-         gout.drawKnight(i, false);
-         break;
-      }
+   //for (int i = 0; i < 64; i++)
+   //   switch (board[i])
+   //   {
+   //   case 'P':
+   //      gout.drawPawn(i, true);
+   //      break;
+   //   case 'p':
+   //      gout.drawPawn(i, false);
+   //      break;
+   //   case 'K':
+   //      gout.drawKing(i, true);
+   //      break;
+   //   case 'k':
+   //      gout.drawKing(i, false);
+   //      break;
+   //   case 'Q':
+   //      gout.drawQueen(i, true);
+   //      break;
+   //   case 'q':
+   //      gout.drawQueen(i, false);
+   //      break;
+   //   case 'R':
+   //      gout.drawRook(i, true);
+   //      break;
+   //   case 'r':
+   //      gout.drawRook(i, false);
+   //      break;
+   //   case 'B':
+   //      gout.drawBishop(i, true);
+   //      break;
+   //   case 'b':
+   //      gout.drawBishop(i, false);
+   //      break;
+   //   case 'N':
+   //      gout.drawKnight(i, true);
+   //      break;
+   //   case 'n':
+   //      gout.drawKnight(i, false);
+   //      break;
+   //   }
 }
 
 ///*********************************************

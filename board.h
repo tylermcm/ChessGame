@@ -11,10 +11,6 @@
  ************************************************************************/
 
 #pragma once
-
-#include <set>
-#include <string>
-
 #include "move.h"
 #include "position.h" // for Position class
 #include "Piece.h"    // for Piece class
@@ -25,20 +21,40 @@ class Piece;
 class Board
 {
 private:
-	Piece* board[64];
-	int currentMove;
-	ogstream gout;
-	void swap(Position pos1, Position pos2);
-	void assertBoard();
+    Piece* board[64]; // Array of Piece pointers
+    int currentMove;
+    ogstream gout;
+    void swap(Position pos1, Position pos2);
+    void assertBoard();
 public:
-	Board(ogstream& gout, bool reset);
-	int getCurrentMove() const { return currentMove;  }
-	bool whiteTurn() const { return currentMove % 2 == 0; }
-	void display(Position posHover, Position posSel);
-	void free();
-	void reset();
-	void move(Move move);
-	void assign(Piece* piece);
+    Board(ogstream& gout, bool reset);
+    int getCurrentMove() const { return currentMove; }
+    bool whiteTurn() const { return currentMove % 2 == 0; }
+    void display(Position posHover, Position posSel);
+    void free();
+    void reset();
+    void move(Move move);
+    void assign(Piece* piece);
+
+    // Non-const version
+    Piece& operator[](const Position& pos) {
+        int index = pos.getRow() * 8 + pos.getCol();
+        if (board[index] == nullptr) {
+            // Handle null pointer situation here.
+            throw std::runtime_error("Null pointer at board index");
+        }
+        return *board[index];
+    }
+
+    // Const version
+    const Piece& operator[](const Position& pos) const {
+        int index = pos.getRow() * 8 + pos.getCol();
+        if (board[index] == nullptr) {
+            // Handle null pointer situation here.
+            throw std::runtime_error("Null pointer at board index");
+        }
+        return *board[index];
+    }
 };
 
 /***********************************************
@@ -47,6 +63,6 @@ public:
  ************************************************/
 struct RC
 {
-	int row;
-	int col;
+    int row;
+    int col;
 };

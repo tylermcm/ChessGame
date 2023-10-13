@@ -37,7 +37,7 @@ public:
 	bool operator != (char letter) const { return getLetter() != letter; }
 	bool isWhite() const { return fWhite; }
 	bool isMoved() const { return getNMoves() != 0; }
-	int getMoves() const { return nMoves; }
+	int getNMoves() const { return nMoves; }
 	const Position& getPosition() const { return nMoves; }
 	bool justMoved(int currentMove) const { return (currentMove - 1 == lastMove); }
 
@@ -84,9 +84,10 @@ public:
 	Pawn(int r, int c, bool isWhite) : Piece (r, c, isWhite) {}
 	char getLetter() const { return 'p'; }
 	void getMoves(set <Move>& moves, const Board& board) const;
+	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
 	{
-		pgout->drawPawn(position, isWhite());
+		pgout->drawPawn(pos, !isWhite());
 	}
 private:
 	void addPromotion(set <Move>& moves, Move& move) const;
@@ -101,9 +102,10 @@ public:
 	Rook(int r, int c, bool isWhite) : Piece(r, c, isWhite) {}
 	char getLetter() const { return 'p'; }
 	void getMoves(set <Move>& moves, const Board& board) const;
+	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
 	{
-		pgout->drawPawn(position, isWhite());
+		pgout->drawPawn(pos, !isWhite());
 	}
 };
 
@@ -116,9 +118,10 @@ public:
 	Knight(int r, int c, bool isWhite) : Piece(r, c, isWhite) {}
 	char getLetter() const { return 'p'; }
 	void getMoves(set <Move>& moves, const Board& board) const;
+	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
 	{
-		pgout->drawPawn(position, isWhite());
+		pgout->drawPawn(pos, !isWhite());
 	}
 };
 
@@ -131,9 +134,10 @@ public:
 	Bishop(int r, int c, bool isWhite) : Piece(r, c, isWhite) {}
 	char getLetter() const { return 'p'; }
 	void getMoves(set <Move>& moves, const Board& board) const;
+	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
 	{
-		pgout->drawPawn(position, isWhite());
+		pgout->drawPawn(pos, !isWhite());
 	}
 };
 
@@ -146,9 +150,10 @@ public:
 	Queen(int r, int c, bool isWhite) : Piece(r, c, isWhite) {}
 	char getLetter() const { return 'p'; }
 	void getMoves(set <Move>& moves, const Board& board) const;
+	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
 	{
-		pgout->drawPawn(position, isWhite());
+		pgout->drawPawn(pos, !isWhite());
 	}
 };
 
@@ -161,8 +166,9 @@ public:
 	King(int r, int c, bool isWhite) : Piece(r, c, isWhite) {}
 	char getLetter() const { return 'p'; }
 	void getMoves(set <Move>& moves, const Board& board) const;
+	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
 	{
-		pgout->drawPawn(position, isWhite());
+		pgout->drawPawn(pos, !isWhite());
 	}
 };
