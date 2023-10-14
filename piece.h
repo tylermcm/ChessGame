@@ -105,7 +105,7 @@ public:
 	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
 	{
-		pgout->drawPawn(pos, !isWhite());
+		pgout->drawRook(pos, !isWhite());
 	}
 };
 
@@ -121,7 +121,7 @@ public:
 	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
 	{
-		pgout->drawPawn(pos, !isWhite());
+		pgout->drawKnight(pos, !isWhite());
 	}
 };
 
@@ -137,7 +137,7 @@ public:
 	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
 	{
-		pgout->drawPawn(pos, !isWhite());
+		pgout->drawBishop(pos, !isWhite());
 	}
 };
 
@@ -153,7 +153,7 @@ public:
 	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
 	{
-		pgout->drawPawn(pos, !isWhite());
+		pgout->drawQueen(pos, !isWhite());
 	}
 };
 
@@ -169,6 +169,6 @@ public:
 	int pos = position.getLocation();
 	virtual void display(ogstream* pgout) const
 	{
-		pgout->drawPawn(pos, !isWhite());
+		pgout->drawKing(pos, !isWhite());
 	}
 };

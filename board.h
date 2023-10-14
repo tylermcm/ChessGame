@@ -27,6 +27,7 @@ private:
     void swap(Position pos1, Position pos2);
     void assertBoard();
 public:
+    Board();
     Board(ogstream& gout, bool reset);
     int getCurrentMove() const { return currentMove; }
     bool whiteTurn() const { return currentMove % 2 == 0; }

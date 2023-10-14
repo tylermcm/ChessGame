@@ -10,6 +10,9 @@
 #include <cassert>        // for ASSERT
 #include <fstream>        // for IFSTREAM
 #include <string>         // for STRING
+#include "board.h"
+#include "piece.h"
+#include "pieceType.h"
 using namespace std;
 
 ///***********************************************
@@ -300,46 +303,46 @@ void draw(const char* board, const Interface& ui, const set <int>& possible)
       gout.drawPossible(*it);
 
    // draw the pieces
-   //for (int i = 0; i < 64; i++)
-   //   switch (board[i])
-   //   {
-   //   case 'P':
-   //      gout.drawPawn(i, true);
-   //      break;
-   //   case 'p':
-   //      gout.drawPawn(i, false);
-   //      break;
-   //   case 'K':
-   //      gout.drawKing(i, true);
-   //      break;
-   //   case 'k':
-   //      gout.drawKing(i, false);
-   //      break;
-   //   case 'Q':
-   //      gout.drawQueen(i, true);
-   //      break;
-   //   case 'q':
-   //      gout.drawQueen(i, false);
-   //      break;
-   //   case 'R':
-   //      gout.drawRook(i, true);
-   //      break;
-   //   case 'r':
-   //      gout.drawRook(i, false);
-   //      break;
-   //   case 'B':
-   //      gout.drawBishop(i, true);
-   //      break;
-   //   case 'b':
-   //      gout.drawBishop(i, false);
-   //      break;
-   //   case 'N':
-   //      gout.drawKnight(i, true);
-   //      break;
-   //   case 'n':
-   //      gout.drawKnight(i, false);
-   //      break;
-   //   }
+   for (int i = 0; i < 64; i++)
+      switch (board[i])
+      {
+      case 'P':
+         gout.drawPawn(i, true);
+         break;
+      case 'p':
+         gout.drawPawn(i, false);
+         break;
+      case 'K':
+         gout.drawKing(i, true);
+         break;
+      case 'k':
+         gout.drawKing(i, false);
+         break;
+      case 'Q':
+         gout.drawQueen(i, true);
+         break;
+      case 'q':
+         gout.drawQueen(i, false);
+         break;
+      case 'R':
+         gout.drawRook(i, true);
+         break;
+      case 'r':
+         gout.drawRook(i, false);
+         break;
+      case 'B':
+         gout.drawBishop(i, true);
+         break;
+      case 'b':
+         gout.drawBishop(i, false);
+         break;
+      case 'N':
+         gout.drawKnight(i, true);
+         break;
+      case 'n':
+         gout.drawKnight(i, false);
+         break;
+      }
 }
 
 ///*********************************************
@@ -379,24 +382,36 @@ void draw(const char* board, const Interface& ui, const set <int>& possible)
  **************************************/
 void callBack(Interface* pUI, void* p)
 {
-   set <int> possible;
-
+   set <Move> moves;
+   ogstream gout;
+   Board* board = new Board();
+   Position hover = pUI->getHoverPosition();
+   Position select = pUI->getSelectPosition();
    // the first step is to cast the void pointer into a game object. This
    // is the first step of every single callback function in OpenGL. 
-   char* board = (char*)p;
+   //char* board = (char*)p;
 
    // move 
+   //board->operator[](pUI->getSelectPosition()).getMoves(moves, *board);
+   //set <Move> ::iterator it;
+   /*for (it = moves.begin(); it != moves.end(); ++it)
+       gout.drawPossible(it->getDes().getLocation());*/
+   
+       
    //if (move(board, pUI->getPreviousPosition(), pUI->getSelectPosition()))
-   //   pUI->clearSelectPosition();
+   //board->move()
+      //pUI->clearSelectPosition();
    //else
       //possible = getPossibleMoves(board, pUI->getSelectPosition());
 
    // if we clicked on a blank spot, then it is not selected
-   if (pUI->getSelectPosition() != -1 && board[pUI->getSelectPosition()] == ' ')
+   if (pUI->getSelectPosition() != -1 && board->operator[](pUI->getSelectPosition()) == ' ') // Not sure why this isn't working?
       pUI->clearSelectPosition();
 
+
    // draw the board
-   draw(board, *pUI, possible);
+   //draw(board, *pUI, possible);
+   board->display(hover, select);
 
 }
 
