@@ -31,6 +31,8 @@ public:
    Move(const Move& rhs) { *this = rhs; }
    Move(const char* s) { *this = s; }
 
+
+
    // getters
    string getText()           const;
    const Position& getDes()  const { return dest; }

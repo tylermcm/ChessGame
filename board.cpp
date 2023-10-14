@@ -1,6 +1,7 @@
 #include "board.h"
 #include "piece.h"
 #include <cassert>
+#include <iostream>
 
 Board::Board()
 {
@@ -70,82 +71,155 @@ Board::Board()
     }
 }
 
-// Constructor
 Board::Board(ogstream& gout, bool reset) {
-   char initialBoard[64] = {
-       'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r',
-       'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p',
-       ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-       ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-       ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-       ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-       'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P',
-       'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'
-   };
+    if (reset) {
+        // Initialize all squares to 'SPACE' objects
+        for (int i = 0; i < 64; ++i) {
+            int row = i / 8;
+            int col = i % 8;
+            board[i] = new Space(row, col);  // Or however you create a SPACE object
+        }
+    }
+    else {
+        char initialBoard[64] = {
+            'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r',
+            'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p',
+            ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+            ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+            ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+            ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+            'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P',
+            'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'
+        };
+        for (int i = 0; i < 64; ++i) {
+            int row = i / 8;
+            int col = i % 8;
+            bool isWhite = (row >= 6);  // Assuming rows 6 and 7 are for white pieces
 
+            switch (initialBoard[i]) {
+            case 'r':
+                board[i] = new Rook(row, col, false);
+                break;
+            case 'n':
+                board[i] = new Knight(row, col, false);
+                break;
+            case 'b':
+                board[i] = new Bishop(row, col, false);
+                break;
+            case 'q':
+                board[i] = new Queen(row, col, false);
+                break;
+            case 'k':
+                board[i] = new King(row, col, false);
+                break;
+            case 'p':
+                board[i] = new Pawn(row, col, false);
+                break;
 
-   for (int i = 0; i < 64; ++i) {
-      int row = i / 8;
-      int col = i % 8;
-      bool isWhite = row >= 6;
+            case 'R':
+                board[i] = new Rook(row, col, true);
+                break;
+            case 'N':
+                board[i] = new Knight(row, col, true);
+                break;
+            case 'B':
+                board[i] = new Bishop(row, col, true);
+                break;
+            case 'Q':
+                board[i] = new Queen(row, col, true);
+                break;
+            case 'K':
+                board[i] = new King(row, col, true);
+                break;
+            case 'P':
+                board[i] = new Pawn(row, col, true);
+                break;
 
-      switch (initialBoard[i]) {
-      case 'r':
-         board[i] = new Rook(row, col, false);
-         break;
-      case 'n':
-         board[i] = new Knight(row, col, false);
-         break;
-      case 'b':
-         board[i] = new Bishop(row, col, false);
-         break;
-      case 'q':
-         board[i] = new Queen(row, col, false);
-         break;
-      case 'k':
-         board[i] = new King(row, col, false);
-         break;
-      case 'p':
-         board[i] = new Pawn(row, col, false);
-         break;
+            case ' ':
+                board[i] = new Space(row, col);
+                break;
 
-      case 'R':
-         board[i] = new Rook(row, col, true);
-         break;
-      case 'N':
-         board[i] = new Knight(row, col, true);
-         break;
-      case 'B':
-         board[i] = new Bishop(row, col, true);
-         break;
-      case 'Q':
-         board[i] = new Queen(row, col, true);
-         break;
-      case 'K':
-         board[i] = new King(row, col, true);
-         break;
-      case 'P':
-         board[i] = new Pawn(row, col, true);
-         break;
-
-      case ' ':
-         board[i] = new Space(row, col);
-         break;
-
-      default:
-         board[i] = nullptr;
-      }
-   }
+            default:
+                board[i] = nullptr;  // Or throw an error
+                break;
+            }
+        }
+    }
 }
+
+// Constructor
+//Board::Board(ogstream& gout, bool reset) {
+//   char initialBoard[64] = {
+//       'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r',
+//       'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p',
+//       ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+//       ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+//       ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+//       ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+//       'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P',
+//       'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'
+//   };
+//
+//
+//   for (int i = 0; i < 64; ++i) {
+//      int row = i / 8;
+//      int col = i % 8;
+//      bool isWhite = row >= 6;
+//
+//      switch (initialBoard[i]) {
+//      case 'r':
+//         board[i] = new Rook(row, col, false);
+//         break;
+//      case 'n':
+//         board[i] = new Knight(row, col, false);
+//         break;
+//      case 'b':
+//         board[i] = new Bishop(row, col, false);
+//         break;
+//      case 'q':
+//         board[i] = new Queen(row, col, false);
+//         break;
+//      case 'k':
+//         board[i] = new King(row, col, false);
+//         break;
+//      case 'p':
+//         board[i] = new Pawn(row, col, false);
+//         break;
+//
+//      case 'R':
+//         board[i] = new Rook(row, col, true);
+//         break;
+//      case 'N':
+//         board[i] = new Knight(row, col, true);
+//         break;
+//      case 'B':
+//         board[i] = new Bishop(row, col, true);
+//         break;
+//      case 'Q':
+//         board[i] = new Queen(row, col, true);
+//         break;
+//      case 'K':
+//         board[i] = new King(row, col, true);
+//         break;
+//      case 'P':
+//         board[i] = new Pawn(row, col, true);
+//         break;
+//
+//      case ' ':
+//         board[i] = new Space(row, col);
+//         break;
+//
+//      default:
+//         board[i] = nullptr;
+//      }
+//   }
+//}
 
 
 // Display the board
-void Board::display(Position posHover, Position posSel) 
+void Board::display(ogstream& gout, Position posHover, Position posSel) 
 {
-    ogstream gout;
-    ogstream* pgout = new ogstream();
-
-    // draw the checkerboard
+      // draw the checkerboard
     gout.drawBoard();
     int hover = posHover.getLocation();
     int select = posSel.getLocation();
@@ -160,7 +234,10 @@ void Board::display(Position posHover, Position posSel)
 
     // draw the pieces
     for (int i = 0; i < 64; i++)
-        board[i]->display(pgout);
+    {
+        if (board[i] != nullptr)
+            board[i]->display(&gout);
+    }
 }
 
 // Free resources (if any)

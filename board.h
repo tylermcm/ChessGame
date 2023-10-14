@@ -21,7 +21,6 @@ class Piece;
 class Board
 {
 private:
-    Piece* board[64]; // Array of Piece pointers
     int currentMove;
     ogstream gout;
     void swap(Position pos1, Position pos2);
@@ -29,9 +28,10 @@ private:
 public:
     Board();
     Board(ogstream& gout, bool reset);
+    Piece* board[64]; // Array of Piece pointers
     int getCurrentMove() const { return currentMove; }
     bool whiteTurn() const { return currentMove % 2 == 0; }
-    void display(Position posHover, Position posSel);
+    void display(ogstream& gout, Position posHover, Position posSel);
     void free();
     void reset();
     void move(Move move);
