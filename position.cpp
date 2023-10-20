@@ -10,7 +10,9 @@
 #include "position.h"
 #include <iostream>
 
- /***************************************************
+
+
+/***************************************************
   * POSITION : COPY CONSTRUCTOR
   ***************************************************/
 Position::Position(const Position& rhs) : location(0)

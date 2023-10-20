@@ -20,7 +20,7 @@ using namespace std;
  * MOVE : DEFAULT CONSTRUCTOR
  ***************************************************/
 Move::Move() :
-   promote(SPACE), capture(SPACE), enpassant(false),
+   piece(PIECE_EMPTY), capture(PIECE_EMPTY), enpassant(false),
    castleK(false), castleQ(false), isWhite(true)
 {
 }
@@ -39,7 +39,7 @@ void Move::complete(const Board& board)
    isWhite = board[source].isWhite();
 
    // handle if this is an en-passant
-   if (capture == SPACE && board[source] == PAWN)
+   if (capture == ' ' && board[source] == 'P')
       enpassant = true;
 }
 
@@ -54,71 +54,20 @@ bool Move::operator == (const Move& rhs) const
       castleQ == rhs.getCastleQ() &&
       enpassant == rhs.getEnPassant() &&
       capture == rhs.getCapture() &&
-      promote == rhs.getPromotion())
+      piece == rhs.getPromotion())
    {
       assert(enpassant == rhs.getEnPassant());
       assert(castleK == rhs.getCastleK());
       assert(castleQ == rhs.getCastleQ());
-      assert(promote == rhs.getPromotion());
+      assert(piece == rhs.getPromotion());
       return true;
    }
    else
       return false;
 }
 
-/***********************************************
- * MOVE : LETTER FROM PIECE TYPE
- *        Get the Smith notation letter for a piece from
- *        the Piece Type
- *********************************************/
-char Move::letterFromPieceType(PieceType pt) const
-{
-   switch (pt)
-   {
-   case SPACE:
-      return ' ';
-   case KING:
-      return 'k';
-   case QUEEN:
-      return 'q';
-   case ROOK:
-      return 'r';
-   case KNIGHT:
-      return 'n';
-   case BISHOP:
-      return 'b';
-   case PAWN:
-      return 'p';
-   }
-   assert(false);
-   return ' ';
-}
 
-/***********************************************
- * MOVE : PIECE TYPE FROM LETTER
- *        Get the Piece Type for a piece from
- *        the Smith notation letter
- *********************************************/
-PieceType Move::pieceTypeFromLetter(char letter) const
-{
-   switch (letter)
-   {
-   case 'k':
-      return KING;
-   case 'q':
-      return QUEEN;
-   case 'r':
-      return ROOK;
-   case 'b':
-      return BISHOP;
-   case 'n':
-      return KNIGHT;
-   case 'p':
-      return PAWN;
-   }
-   assert(false);
-   return SPACE;
-}
+
 
 
 /***********************************************
@@ -143,10 +92,10 @@ string Move::getText() const
       sout << "c";
    if (castleQ)
       sout << "C";
-   if (promote != SPACE)
-      sout << toupper(letterFromPieceType(promote));
+   if (piece != PIECE_EMPTY)
+       sout << piece;
    if (capture != SPACE && !enpassant)
-      sout << letterFromPieceType(capture);
+       sout << (char)tolower(capture);
 
    // return the result as a string
    return sout.str();
@@ -159,7 +108,7 @@ const Move& Move::operator = (const Move& rhs)
 {
    source = rhs.getSrc();
    dest = rhs.getDes();
-   promote = rhs.getPromotion();
+   piece = rhs.getPromotion();
    capture = rhs.getCapture();
    enpassant = rhs.getEnPassant();
    castleK = rhs.getCastleK();
@@ -199,24 +148,13 @@ void Move::read(const string& s)
       switch (s[i])
       {
       case 'p':   // capture a pawn
-         capture = PAWN;
-         break;
       case 'n':   // capture a knight
-         capture = KNIGHT;
-         break;
       case 'b':   // capture a bishop
-         capture = BISHOP;
-         break;
       case 'r':   // capture a rook
-         capture = ROOK;
-         break;
       case 'q':   // capture a queen
-         capture = QUEEN;
-         break;
       case 'k':   // !! you can't capture a king you silly!
-         capture = KING;
-         break;
-
+          capture = tolower(s[i]);
+          break;
       case 'c':  // short castling or kings castle
          castleK = true;
          break;
@@ -228,18 +166,11 @@ void Move::read(const string& s)
          break;
 
       case 'N':  // Promote to knight
-         promote = KNIGHT;
-         break;
       case 'B':  // Promote to Bishop
-         promote = BISHOP;
-         break;
       case 'R':  // Promote to Rook
-         promote = ROOK;
-         break;
       case 'Q':  // Promote to Queen
-         promote = QUEEN;
-         break;
-
+          piece = s[i];
+          break;
       default:
          // unknown piece
          error = s;

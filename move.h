@@ -35,10 +35,10 @@ public:
 
    // getters
    string getText()           const;
-   const Position& getDes()  const { return dest; }
-   const Position& getSrc()  const { return source; }
-   PieceType getPromotion()   const { return promote; }
-   PieceType getCapture()     const { return capture; }
+   const Position& getDes()   const { return dest; }
+   const Position& getSrc()   const { return source; }
+   char getPromotion()        const { return piece; }
+   char getCapture()          const { return capture; }
    bool getEnPassant()        const { return enpassant; }
    bool getCastleK()          const { return castleK; }
    bool getCastleQ()          const { return castleQ; }
@@ -50,12 +50,12 @@ public:
    bool operator <  (const Move& rhs)   const { return dest.getLocation() < rhs.dest.getLocation(); }
 
    // setters
-   void setCapture(PieceType pt) { capture = pt; }
-   void setWhiteMove(bool f) { isWhite = f; }
+   void setCapture(char letter)     { capture = tolower(letter); }
+   void setWhiteMove(bool f)        { isWhite = f; }
    void setSrc(const Position& src) { source = src; }
    void setDes(const Position& des) { dest = des; }
-   void setEnPassant() { enpassant = true; }
-   void setPromote(PieceType pt) { promote = pt; }
+   void setEnPassant()              { enpassant = true; }
+   void setPromote(char letter)     { piece = letter ; }
    void complete(const Board& board);
    void setCastle(bool isKing)
    {
@@ -85,13 +85,11 @@ public:
 
 private:
    void read(const std::string& s);
-   char letterFromPieceType(PieceType pt) const;
-   PieceType pieceTypeFromLetter(char letter) const;
 
    Position  source;    // where the move originated from
    Position  dest;      // where the move finished
-   PieceType promote;   // piece to be promoted to
-   PieceType capture;   // did a capture happen this move?
+   char      piece;     // piece to be promoted to
+   char      capture;   // did a capture happen this move?
    bool      enpassant; // Enpassant pawn capture
    bool      castleK;   // kingside castle
    bool      castleQ;   // queenside castle

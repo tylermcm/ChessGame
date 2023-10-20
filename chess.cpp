@@ -18,6 +18,15 @@
 using namespace std;
 
 
+class Demo
+{
+public:
+    Demo(ogstream& gout) : gout(gout), board(&this->gout) {}
+	Board board;
+    ogstream& gout;
+
+};
+
 /*************************************
  * All the interesting work happens here, when
  * I get called back from OpenGL to draw a frame.
@@ -27,9 +36,10 @@ using namespace std;
  **************************************/
 void callBack(Interface* pUI, void* p)
 {
+    Demo* pDemo = (Demo*)p;
     ogstream gout;
-    //Board* board = (Board*)p;
-    Board* board = new Board();
+
+    //Board* board = new Board();
     set<Move> moves;
 
     if (pUI->getPreviousPosition() != -1 && pUI->getSelectPosition() != -1)
@@ -38,7 +48,7 @@ void callBack(Interface* pUI, void* p)
         pUI->clearSelectPosition();
         pUI->clearPreviousPosition();
     }
-    board->display(gout, pUI->getHoverPosition(), pUI->getSelectPosition());
+    pDemo->board.display(pUI->getHoverPosition(), pUI->getSelectPosition());
 }
 
 /********************************************************

@@ -14,6 +14,7 @@
 #include "position.h"
 #include "move.h"
 #include "uiDraw.h"
+#define PIECE_EMPTY  ' '
 using std::set;
 
 class Board;
